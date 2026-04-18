@@ -72,10 +72,7 @@ git clone https://github.com/codewith-amir/CodeAlpha_StockTradingPlatform.git
 cd CodeAlpha_StockTradingPlatform
 
 # 2. Compile all source files
-javac -d out src/com/codealpha/stocktrading/*.java \
-              src/com/codealpha/stocktrading/model/*.java \
-              src/com/codealpha/stocktrading/service/*.java \
-              src/com/codealpha/stocktrading/util/*.java
+javac -d out src/com/codealpha/stocktrading/*.java src/com/codealpha/stocktrading/model/*.java src/com/codealpha/stocktrading/service/*.java src/com/codealpha/stocktrading/util/*.java
 
 # 3. Run the application
 java -cp out com.codealpha.stocktrading.Main
@@ -85,7 +82,7 @@ java -cp out com.codealpha.stocktrading.Main
 
 ```bash
 # Compile
-javac src/com/codealpha/stocktrading/**/*.java -d out
+javac -d out src/com/codealpha/stocktrading/*.java src/com/codealpha/stocktrading/model/*.java src/com/codealpha/stocktrading/service/*.java src/com/codealpha/stocktrading/util/*.java
 
 # Run
 java -cp out com.codealpha.stocktrading.Main
@@ -188,6 +185,8 @@ See `ANALYSIS_REPORT.md` for detailed bug analysis and improvements.
 ---
 
 ## 📝 License
+
+This repository is protected by the included [LICENSE](LICENSE) file.
 
 Copyright © 2026 Muhammad Amir. All rights reserved.
 
