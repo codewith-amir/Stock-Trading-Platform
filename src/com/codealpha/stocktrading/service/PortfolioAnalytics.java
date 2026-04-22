@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 /**
  * Advanced portfolio analytics and performance metrics.
  * Provides insights into portfolio composition, sector allocation, risk metrics, etc.
- * Author: Muhammad Amir | GitHub: codewith-amir
  */
 public class PortfolioAnalytics {
 
@@ -138,7 +137,6 @@ public class PortfolioAnalytics {
      */
     public static String getPortfolioRecommendation(User user, MarketService market) {
         double pnl = user.getOverallPnL(market.getAllStocks());
-        double netWorth = user.getTotalNetWorth(market.getAllStocks());
         double concentration = getPortfolioConcentration(user, market);
         List<PortfolioHolding> underperforming = getUnderperformingHoldings(user, market);
 

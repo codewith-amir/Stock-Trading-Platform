@@ -12,7 +12,6 @@ import java.util.List;
 /**
  * Handles file I/O — saves transaction history and portfolio snapshots.
  * Files are written to the working directory under: trading_data/
- * Author: Muhammad Amir | GitHub: codewith-amir
  */
 public class FileService {
 
@@ -22,8 +21,6 @@ public class FileService {
     static {
         new File(DIR).mkdirs();
     }
-
-    // ─── Save Transaction History ──────────────────────────────────────────────
     public static void saveTransactionHistory(User user) {
         String filename = DIR + "/" + user.getUsername() + "_transactions.csv";
         try (PrintWriter pw = new PrintWriter(new FileWriter(filename))) {
@@ -38,8 +35,6 @@ public class FileService {
             System.out.println("  ✘  Error saving transactions: " + e.getMessage());
         }
     }
-
-    // ─── Save Portfolio Snapshot ───────────────────────────────────────────────
     public static void savePortfolioSnapshot(User user, MarketService market) {
         String filename = DIR + "/" + user.getUsername() + "_portfolio_"
             + LocalDateTime.now().format(DT) + ".csv";
@@ -67,8 +62,6 @@ public class FileService {
             System.out.println("  ✘  Error saving portfolio: " + e.getMessage());
         }
     }
-
-    // ─── Load Transaction History (display only) ───────────────────────────────
     public static void printSavedHistory(String username) {
         String filename = DIR + "/" + username + "_transactions.csv";
         File f = new File(filename);

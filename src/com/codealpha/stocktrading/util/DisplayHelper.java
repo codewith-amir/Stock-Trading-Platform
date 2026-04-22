@@ -4,15 +4,11 @@ import com.codealpha.stocktrading.model.*;
 import com.codealpha.stocktrading.service.MarketService;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Console UI / display helper for the Stock Trading Platform.
- * Author: Muhammad Amir | GitHub: codewith-amir
  */
 public class DisplayHelper {
-
-    // ─── ANSI Colors ───────────────────────────────────────────────────────────
     public static final String RESET   = "\u001B[0m";
     public static final String BOLD    = "\u001B[1m";
     public static final String GREEN   = "\u001B[32m";
@@ -25,20 +21,14 @@ public class DisplayHelper {
     public static final String DIM     = "\u001B[2m";
 
     private static final int W = 72;
-
-    // ─── Banner ────────────────────────────────────────────────────────────────
     public static void printBanner() {
         line('=');
         System.out.println(BOLD + CYAN +
-            "         STOCK TRADING PLATFORM  ─  CodeAlpha Internship" + RESET);
+            "               STOCK TRADING PLATFORM" + RESET);
         System.out.println(CYAN +
-            "               Java Developer Internship  |  Task 2" + RESET);
-        System.out.println(WHITE +
-            "          Author: Muhammad Amir  |  GitHub: codewith-amir" + RESET);
+            "               Console Trading Simulator" + RESET);
         line('=');
     }
-
-    // ─── Main Menu ─────────────────────────────────────────────────────────────
     public static void printMenu(User user, MarketService market) {
         System.out.println();
         line('-');
@@ -63,8 +53,6 @@ public class DisplayHelper {
         line('-');
         System.out.print(BOLD + "  Enter choice: " + RESET);
     }
-
-    // ─── Market Overview ───────────────────────────────────────────────────────
     public static void printMarketOverview(MarketService market) {
         System.out.println();
         line('=');
@@ -107,8 +95,6 @@ public class DisplayHelper {
         System.out.println();
         line('=');
     }
-
-    // ─── Stock Detail ──────────────────────────────────────────────────────────
     public static void printStockDetail(Stock s, User user) {
         System.out.println();
         line('=');
@@ -126,14 +112,12 @@ public class DisplayHelper {
         System.out.printf("  %-18s : $%.2f%n", "Day Low",        s.getDayLow());
         System.out.printf("  %-18s : %,d%n",   "Volume",         s.getVolume());
 
-        // Mini price chart
         line('-');
         System.out.println(BOLD + "  Price History (recent ticks):" + RESET);
         System.out.print("  ");
         for (double p : s.getPriceHistory()) System.out.printf("$%.2f  ", p);
         System.out.println();
 
-        // User's holding
         PortfolioHolding h = user.getHolding(s.getSymbol());
         if (h != null) {
             line('-');
@@ -148,8 +132,6 @@ public class DisplayHelper {
         }
         line('=');
     }
-
-    // ─── Portfolio ─────────────────────────────────────────────────────────────
     public static void printPortfolio(User user, MarketService market) {
         System.out.println();
         line('=');
@@ -200,8 +182,6 @@ public class DisplayHelper {
         System.out.printf("  %-22s : $%.2f%n", "Starting Balance", user.getStartingBalance());
         line('=');
     }
-
-    // ─── Transaction History ───────────────────────────────────────────────────
     public static void printTransactionHistory(User user) {
         System.out.println();
         line('=');
@@ -227,8 +207,6 @@ public class DisplayHelper {
         }
         line('=');
     }
-
-    // ─── Utilities ─────────────────────────────────────────────────────────────
     public static void line(char ch) {
         System.out.println("  " + String.valueOf(ch).repeat(W));
     }
@@ -244,8 +222,6 @@ public class DisplayHelper {
     private static String netWorthColor(User u, MarketService m) {
         return u.getOverallPnL(m.getAllStocks()) >= 0 ? GREEN : RED;
     }
-
-    // ─── Portfolio Analytics ───────────────────────────────────────────────────
     public static void printPortfolioAnalytics(User user, MarketService market) {
         java.util.Map<String, Double> sectorAlloc = com.codealpha.stocktrading.service.PortfolioAnalytics.getSectorAllocation(user, market);
         double diversification = com.codealpha.stocktrading.service.PortfolioAnalytics.getDiversificationScore(user, market);
@@ -275,8 +251,6 @@ public class DisplayHelper {
 
         line('=');
     }
-
-    // ─── Stock Intelligence ────────────────────────────────────────────────────
     public static void printStockIntelligence(Stock stock) {
         String trend = com.codealpha.stocktrading.service.MarketIntelligence.analyzePriceTrend(stock);
         double rsi = com.codealpha.stocktrading.service.MarketIntelligence.calculateRSI(stock);

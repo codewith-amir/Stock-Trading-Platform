@@ -5,7 +5,6 @@ import java.time.format.DateTimeFormatter;
 
 /**
  * Represents a single BUY or SELL transaction.
- * Author: Muhammad Amir | GitHub: codewith-amir
  */
 public class Transaction {
 
@@ -29,8 +28,6 @@ public class Transaction {
         this.totalValue     = quantity * pricePerShare;
         this.timestamp      = LocalDateTime.now();
     }
-
-    // ─── Getters ───────────────────────────────────────────────────────────────
     public Type   getType()          { return type; }
     public String getSymbol()        { return symbol; }
     public int    getQuantity()      { return quantity; }

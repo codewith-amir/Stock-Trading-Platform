@@ -6,7 +6,6 @@ import java.util.*;
 /**
  * Market Intelligence and Stock Recommendation Engine.
  * Provides technical analysis, price trends, and smart recommendations.
- * Author: Muhammad Amir | GitHub: codewith-amir
  */
 public class MarketIntelligence {
 

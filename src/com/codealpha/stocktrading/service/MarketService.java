@@ -6,14 +6,9 @@ import java.util.*;
 
 /**
  * Manages the stock market — holds all listed stocks and refreshes prices.
- * Author: Muhammad Amir | GitHub: codewith-amir
  */
 public class MarketService {
-
-    // symbol → Stock
     private final Map<String, Stock> stocks = new LinkedHashMap<>();
-
-    // ─── Constructor — seed with 12 realistic stocks ───────────────────────────
     public MarketService() {
         // Tech
         addStock("AAPL", "Apple Inc.",          "Technology",    189.50);
@@ -43,14 +38,10 @@ public class MarketService {
     private void addStock(String symbol, String name, String sector, double price) {
         stocks.put(symbol, new Stock(symbol, name, sector, price));
     }
-
-    // ─── Market Refresh ────────────────────────────────────────────────────────
     /** Simulates one market tick — all prices fluctuate. */
     public void refreshMarket() {
         for (Stock s : stocks.values()) s.simulatePriceChange();
     }
-
-    // ─── Lookup ────────────────────────────────────────────────────────────────
     public Stock getStock(String symbol) {
         return stocks.get(symbol.toUpperCase());
     }

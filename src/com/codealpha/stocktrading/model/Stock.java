@@ -6,8 +6,6 @@ import java.util.Random;
 
 /**
  * Represents a publicly traded stock with real-time simulated price fluctuation.
- * Author: Muhammad Amir | GitHub: codewith-amir
- * CodeAlpha Java Internship — Task 2: Stock Trading Platform
  */
 public class Stock {
 
@@ -23,8 +21,6 @@ public class Stock {
     private final List<Double> priceHistory;
 
     private static final Random random = new Random();
-
-    // ─── Constructor ───────────────────────────────────────────────────────────
     public Stock(String symbol, String companyName, String sector, double initialPrice) {
         this.symbol        = symbol;
         this.companyName   = companyName;
@@ -38,8 +34,6 @@ public class Stock {
         this.priceHistory  = new ArrayList<>();
         this.priceHistory.add(initialPrice);
     }
-
-    // ─── Price Simulation ──────────────────────────────────────────────────────
     /**
      * Simulates realistic market price fluctuation (±3% per tick).
      */
@@ -60,13 +54,9 @@ public class Stock {
         priceHistory.add(currentPrice);
         if (priceHistory.size() > 10) priceHistory.remove(0);
     }
-
-    // ─── Computed Properties ───────────────────────────────────────────────────
     public double getPriceChange()        { return currentPrice - previousClose; }
     public double getPriceChangePercent() { return (getPriceChange() / previousClose) * 100; }
     public boolean isPositive()           { return getPriceChange() >= 0; }
-
-    // ─── Getters & Setters ─────────────────────────────────────────────────────
     public String getSymbol()        { return symbol; }
     public String getCompanyName()   { return companyName; }
     public String getSector()        { return sector; }
