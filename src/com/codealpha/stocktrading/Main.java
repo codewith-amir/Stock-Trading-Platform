@@ -3,7 +3,6 @@ package com.codealpha.stocktrading;
 import com.codealpha.stocktrading.model.*;
 import com.codealpha.stocktrading.service.*;
 import com.codealpha.stocktrading.util.DisplayHelper;
-
 import java.util.Scanner;
 
 /**
@@ -11,59 +10,59 @@ import java.util.Scanner;
  */
 public class Main {
 
-    private static final Scanner scanner = new Scanner(System.in);
     private static final MarketService market = new MarketService();
     private static User user;
 
     public static void main(String[] args) {
-        DisplayHelper.printBanner();
-        loginUser();
+        try (Scanner scanner = new Scanner(System.in)) {
+            DisplayHelper.printBanner();
+            loginUser(scanner);
 
-        market.refreshMarket();
-        DisplayHelper.info("Market is open. Starting balance: $" +
-            String.format("%.2f", User.STARTING_CASH));
-        System.out.println();
+            market.refreshMarket();
+            DisplayHelper.info("Market is open. Starting balance: $" +
+                String.format("%.2f", User.STARTING_CASH));
+            System.out.println();
 
-        boolean running = true;
-        while (running) {
-            DisplayHelper.printMenu(user, market);
-            String choice = scanner.nextLine().trim();
+            boolean running = true;
+            while (running) {
+                DisplayHelper.printMenu(user, market);
+                String choice = scanner.nextLine().trim();
 
-            switch (choice) {
-                case "1" -> DisplayHelper.printMarketOverview(market);
-                case "2" -> stockDetail();
-                case "3" -> buyShares();
-                case "4" -> sellShares();
-                case "5" -> DisplayHelper.printPortfolio(user, market);
-                case "6" -> DisplayHelper.printTransactionHistory(user);
-                case "7" -> portfolioAnalytics();
-                case "8" -> stockIntelligence();
-                case "9" -> manageWatchlist();
-                case "10" -> {
-                    market.refreshMarket();
-                    DisplayHelper.ok("Market prices refreshed.");
+                switch (choice) {
+                    case "1" -> DisplayHelper.printMarketOverview(market);
+                    case "2" -> stockDetail(scanner);
+                    case "3" -> buyShares(scanner);
+                    case "4" -> sellShares(scanner);
+                    case "5" -> DisplayHelper.printPortfolio(user, market);
+                    case "6" -> DisplayHelper.printTransactionHistory(user);
+                    case "7" -> portfolioAnalytics();
+                    case "8" -> stockIntelligence(scanner);
+                    case "9" -> manageWatchlist(scanner);
+                    case "10" -> {
+                        market.refreshMarket();
+                        DisplayHelper.ok("Market prices refreshed.");
+                    }
+                    case "11" -> {
+                        FileService.saveTransactionHistory(user);
+                        FileService.savePortfolioSnapshot(user, market);
+                    }
+                    case "0" -> {
+                        System.out.println();
+                        DisplayHelper.info("Saving data before exit...");
+                        FileService.saveTransactionHistory(user);
+                        FileService.savePortfolioSnapshot(user, market);
+                        System.out.println();
+                        DisplayHelper.info("Goodbye, " + user.getUsername() + ".");
+                        System.out.println();
+                        running = false;
+                    }
+                    default -> DisplayHelper.err("Invalid choice. Enter a number 0-11.");
                 }
-                case "11" -> {
-                    FileService.saveTransactionHistory(user);
-                    FileService.savePortfolioSnapshot(user, market);
-                }
-                case "0" -> {
-                    System.out.println();
-                    DisplayHelper.info("Saving data before exit...");
-                    FileService.saveTransactionHistory(user);
-                    FileService.savePortfolioSnapshot(user, market);
-                    System.out.println();
-                    DisplayHelper.info("Goodbye, " + user.getUsername() + ".");
-                    System.out.println();
-                    running = false;
-                }
-                default -> DisplayHelper.err("Invalid choice. Enter a number 0-11.");
             }
         }
-        scanner.close();
     }
 
-    private static void loginUser() {
+    private static void loginUser(Scanner scanner) {
         System.out.println();
         System.out.print("  Enter your trader name: ");
         String name = scanner.nextLine().trim();
@@ -75,7 +74,7 @@ public class Main {
         DisplayHelper.ok("Welcome, " + user.getUsername() + ". Account created.");
     }
 
-    private static void stockDetail() {
+    private static void stockDetail(Scanner scanner) {
         System.out.println();
         System.out.print("  Enter stock symbol (e.g. AAPL, TSLA): ");
         String symbol = scanner.nextLine().trim().toUpperCase();
@@ -88,7 +87,7 @@ public class Main {
         }
     }
 
-    private static void buyShares() {
+    private static void buyShares(Scanner scanner) {
         System.out.println();
         System.out.print("  Enter symbol to BUY: ");
         String symbol = scanner.nextLine().trim().toUpperCase();
@@ -161,7 +160,7 @@ public class Main {
         }
     }
 
-    private static void sellShares() {
+    private static void sellShares(Scanner scanner) {
         System.out.println();
 
         if (user.getPortfolio().isEmpty()) {
@@ -252,7 +251,7 @@ public class Main {
         DisplayHelper.printPortfolioAnalytics(user, market);
     }
 
-    private static void stockIntelligence() {
+    private static void stockIntelligence(Scanner scanner) {
         System.out.println();
         System.out.print("  Enter stock symbol to analyze: ");
         String symbol = scanner.nextLine().trim().toUpperCase();
@@ -271,7 +270,7 @@ public class Main {
         DisplayHelper.printStockIntelligence(stock);
     }
 
-    private static void manageWatchlist() {
+    private static void manageWatchlist(Scanner scanner) {
         Watchlist watchlist = user.getWatchlist();
 
         while (true) {
@@ -291,8 +290,8 @@ public class Main {
 
             switch (choice) {
                 case "1" -> viewWatchlist();
-                case "2" -> addToWatchlist();
-                case "3" -> removeFromWatchlist();
+                case "2" -> addToWatchlist(scanner);
+                case "3" -> removeFromWatchlist(scanner);
                 case "0" -> {
                     return;
                 }
@@ -338,7 +337,7 @@ public class Main {
         DisplayHelper.line('=');
     }
 
-    private static void addToWatchlist() {
+    private static void addToWatchlist(Scanner scanner) {
         System.out.println();
         System.out.print("  Enter stock symbol to watch: ");
         String symbol = scanner.nextLine().trim().toUpperCase();
@@ -357,7 +356,7 @@ public class Main {
         DisplayHelper.ok("Added " + symbol + " to watchlist.");
     }
 
-    private static void removeFromWatchlist() {
+    private static void removeFromWatchlist(Scanner scanner) {
         System.out.println();
         System.out.print("  Enter stock symbol to remove: ");
         String symbol = scanner.nextLine().trim().toUpperCase();

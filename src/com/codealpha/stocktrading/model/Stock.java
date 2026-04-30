@@ -13,8 +13,8 @@ public class Stock {
     private final String companyName;
     private final String sector;
     private double currentPrice;
-    private double openPrice;
-    private double previousClose;
+    private final double openPrice;
+    private final double previousClose;
     private double dayHigh;
     private double dayLow;
     private long volume;

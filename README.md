@@ -43,8 +43,20 @@ src/com/codealpha/stocktrading/
 
 ## Build and Run
 
+Use the command set that matches your shell:
+
+Windows PowerShell:
+
+```powershell
+$files = Get-ChildItem -Recurse src -Filter *.java | ForEach-Object { $_.FullName }
+javac -d out $files
+java -cp out com.codealpha.stocktrading.Main
+```
+
+macOS / Linux / Git Bash:
+
 ```bash
-javac -d out src/com/codealpha/stocktrading/*.java src/com/codealpha/stocktrading/model/*.java src/com/codealpha/stocktrading/service/*.java src/com/codealpha/stocktrading/util/*.java
+javac -d out $(find src -name "*.java")
 java -cp out com.codealpha.stocktrading.Main
 ```
 
@@ -58,6 +70,7 @@ The application writes CSV files to `trading_data/`:
 ## Notes
 
 - Monetary values are rounded to cents to reduce floating-point drift.
+- The app saves CSV snapshots to `trading_data/`, but it starts a new in-memory account each time it launches.
 - See `ANALYSIS_REPORT.md` for implementation notes and improvements.
 
 ## License
